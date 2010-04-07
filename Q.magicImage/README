@@ -1,0 +1,26 @@
+Q.magicImage - магическая обработка картинок на лету
+
+
+Install:
+
+# add to htacces:
+RewriteRule ^(.*)(\.jpg|\.jpeg|\.bmp|\.png|\.gif)(\.magic)$ path_to_dir/Q.magicImage.php [L]
+
+# in Q.magicImage.php define const.
+
+
+Using:
+ *params in URI*
+
+width(int) : ширина картинке на выходе (optional if height)
+height(int) : высота картинке на выходе (optional if width)
+m(bool) : подгоняет по меньшей грани (optional = false) [need width && height]
+wp(bool)[without proportions] : без учёта пропорции (optional = false)
+	
+
+Example:
+
+/etc/img.jpeg - original image 1000x1000
+/etc/img.jpeg.magic?width=200 [200x200]
+/etc/img.jpeg.magic?width=200&height=300 [200x200]
+/etc/img.jpeg.magic?width=200&height=300&wp [200x300]

@@ -4,7 +4,7 @@ Q.magicImage - магическая обработка картинок на л�
 Install:
 
 # add to htacces:
-RewriteRule ^(.*)(\.jpg|\.jpeg|\.bmp|\.png|\.gif)(\.magic)$ path_to_dir/Q.magicImage.php [L]
+RewriteRule ^(.*)\.(jpe?g|png|gif|bmp)(\.magic)$ path_to_dir/Q.magicImage.php [L]
 
 # in Q.magicImage.php define const.
 

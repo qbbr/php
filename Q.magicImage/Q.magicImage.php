@@ -3,7 +3,7 @@
  * магическая обработка картинок на лету
  *
  * add to htacces
- * RewriteRule ^(.*)(\.jpg|\.jpeg|\.bmp|\.png|\.gif)(\.magic)$ path_to_dir/Q.magicImage.php [L]
+ * RewriteRule ^(.*)\.(jpe?g|png|gif|bmp)(\.magic)$ path_to_dir/Q.magicImage.php [L]
  *
  * @param int width - ширина картинке на выходе (optional if height)
  * @param int height - высота картинке на выходе (optional if width)
@@ -40,7 +40,8 @@ function resize($fileURI, $maxWidth = null, $maxHeight = null, $m = false, $wp =
 		$cache_file = CACHE_DIR.md5($file_name.$maxWidth.$maxHeight.$m.$wp).'.'.$file_type;
 
 		if (is_file($cache_file)) {
-			die(file_get_contents($cache_file));
+			readfile($cache_file);
+			exit();
 		}
 	}
 
@@ -86,8 +87,8 @@ function resize($fileURI, $maxWidth = null, $maxHeight = null, $m = false, $wp =
 	}
 
 	if ($no_work) {
-		echo file_get_contents($file);
-		return true;
+		readfile($file);
+		exit();
 	}
 
 	$image_p = imagecreatetruecolor($newWidth, $newHeight);

@@ -1,0 +1,8 @@
+Q.cssmin - Cascading Style Sheets Minifier
+
+Install:
+
+# add to htacces:
+RewriteRule ^.*\.css$ cssmin.php [L]
+
+# in Q.cssmin.php define const.

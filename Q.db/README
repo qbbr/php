@@ -1,0 +1,26 @@
+Q.db.class - php class for MySQL DB with debug
+
+Example:
+
+require_once 'Q.db.class.php';
+
+db::setConfig(
+	array(
+		'db_host' => 'localhost',
+		'db_post' => 3306,
+		'db_name' => 'test_base',
+		'db_user' => 'user_name',
+		'db_psswd' => 'password123'
+	)
+);
+
+$users = db::query("
+	SELECT *
+	FROM `t1`
+	LEFT JOIN (`t2`) USING (`id`)
+	ORDER by `name`
+");
+
+foreach($users as $user) {
+	print_r($user]);
+}

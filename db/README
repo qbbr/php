@@ -1,8 +1,8 @@
-Q.db.class - php class for MySQL DB with debug
+db.class.php - php class for MySQL DB with debug
 
 Example:
 
-require_once 'Q.db.class.php';
+require_once 'db.class.php';
 
 db::setConfig(
 	array(

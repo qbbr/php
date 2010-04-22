@@ -136,33 +136,6 @@ class db {
 
 
 	/**
-	 * запрос к БД
-	 * @static
-	 * @param string $query SQL запрос
-	 * @return bool
-	 */
-	static public function exec($query) {
-		if (self::$debug) $start_time = self::get_microtime(); // debug
-
-		$result = mysql_query($query, self::getObj());
-
-		// debug
-		if (self::$debug) {
-			$query_time = self::get_microtime() - $start_time;
-			self::$all_query_time += $query_time;
-			array_push(self::$query_log, array(
-				'query' => $query,
-				'result' => $result,
-				'timestamp' => $query_time
-			));
-		}
-
-		if ($result === true) return true;
-		else return false;
-	}
-
-
-	/**
 	 * получение auto_increment id из последнего запроса
 	 * @static
 	 * @return int

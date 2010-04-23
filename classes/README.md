@@ -1,16 +1,16 @@
 db.class.php - php class for MySQL DB with debug
-------------------------------------------------
+================================================
 
 	require_once "db.class.php";
 
 	db::setConfig(
-	  array(
-		'db_host' => "localhost",
-		'db_post' => 3306,
-		'db_name' => "test_base",
-		'db_user' => "user_name",
-		'db_psswd' => "password123"
-	  )
+		array(
+			'db_host' => "localhost",
+			'db_post' => 3306,
+			'db_name' => "test_base",
+			'db_user' => "user_name",
+			'db_psswd' => "password123"
+		)
 	);
 
 	$users = db::query("
@@ -27,7 +27,7 @@ db.class.php - php class for MySQL DB with debug
 
 
 template.class.php - small template engine
-------------------------------------------
+==========================================
 
 	require_once "template.class.php";
 
@@ -44,7 +44,7 @@ in file: /var/www/site/templates/template.tmpl.php
 
 
 registry.class.php - temporary storage
---------------------------------------
+======================================
 
 	require_once "registry.class.php";
 

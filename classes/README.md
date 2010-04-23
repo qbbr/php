@@ -26,7 +26,6 @@ db.class.php - php class for MySQL DB with debug
 
 
 
-==========================================
 template.class.php - small template engine
 ------------------------------------------
 
@@ -44,7 +43,6 @@ in file: /var/www/site/templates/template.tmpl.php
 
 
 
-======================================
 registry.class.php - temporary storage
 --------------------------------------
 

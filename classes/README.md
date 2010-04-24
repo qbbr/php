@@ -79,3 +79,13 @@ mail.class.php - send mail
 	$mail->subject("тема");
 	$mail->message("текст");
 	$mail->send();
+
+
+
+folder.class.php - folder manipulation
+======================================
+
+
+
+file.class.php - file manipulation
+==================================

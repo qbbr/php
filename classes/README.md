@@ -69,13 +69,13 @@ registry.class.php - temporary storage
 mail.class.php - send mail
 ==========================
 
-require_once "mail.class.php";
+	require_once "mail.class.php";
 
-$mail = new mail();
-$mail->from("mail@mail.ru", "Sokolov Innokenty");
-$mail->to("mail@mail.ru");
-$mail->cc("mail@mail.ru");
-$mail->bcc("mail@mail.ru");
-$mail->subject("тема");
-$mail->message("текст");
-$mail->send();
+	$mail = new mail();
+	$mail->from("mail@mail.ru", "Sokolov Innokenty");
+	$mail->to("mail@mail.ru");
+	$mail->cc("mail@mail.ru");
+	$mail->bcc("mail@mail.ru");
+	$mail->subject("тема");
+	$mail->message("текст");
+	$mail->send();

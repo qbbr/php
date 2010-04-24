@@ -63,3 +63,19 @@ registry.class.php - temporary storage
 
 	echo registry::get("test2", "key1", "key12");
 	// value12
+
+
+
+mail.class.php - send mail
+==========================
+
+require_once "mail.class.php";
+
+$mail = new mail();
+$mail->from("mail@mail.ru", "Sokolov Innokenty");
+$mail->to("mail@mail.ru");
+$mail->cc("mail@mail.ru");
+$mail->bcc("mail@mail.ru");
+$mail->subject("тема");
+$mail->message("текст");
+$mail->send();

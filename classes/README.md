@@ -107,5 +107,5 @@ cache.class.php - simple caching system for all
 			ORDER by `name`
 		");
 
-		cache::set("statistics", $query); // set cache
+		cache::set("cache_key", $query); // set cache
 	}

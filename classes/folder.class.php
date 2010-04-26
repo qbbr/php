@@ -25,8 +25,8 @@ class folder {
 	 * @param bool $create создать директорию, если таковой нет
 	 * @param int $mod права доступа
 	 */
-	public function __construct($path = null, $create = false, $mod = false) {
-		if (empty($path)) {
+	public function __construct($path = false, $create = false, $mod = false) {
+		if ($path !== false && empty($path)) {
 			trigger_error("folder.class.php - path to dir is empty", E_USER_ERROR);
 		}
 
@@ -48,11 +48,13 @@ class folder {
 	 * @param int $mod права доступа
 	 * @return bool
 	 */
-	public function create($path, $mod = false) {
+	public function create($path = null, $mod = false) {
+		if (empty($path)) $path = $this->path;
+
 		if (empty($path) || file_exists($path)) {
 			return false;
 		}
-		
+
 		if (!$mod) {
 			$mod = $this->chmod;
 		}
@@ -62,11 +64,51 @@ class folder {
 
 
 	/**
+	 * рекурсивное удаление директории
+	 * @param string $path путь
+	 * @return bool
+	 */
+	public function delete($path = null) {
+		if (empty($path)) $path = $this->path;
+
+		if (!file_exists($path)) return true;
+
+		$path = $this->repair_path($path);
+
+		foreach (scandir($path) as $item) {
+			if ($item == '.' || $item == '..') continue;
+
+			$item = $path.DIRECTORY_SEPARATOR.$item;
+
+			if (is_file($item) && !@unlink($item)) {
+				return false;
+			} else if (is_dir($item) && !$this->delete($item)) {
+				return false;
+			}
+		}
+
+		return @rmdir($path);
+	}
+
+
+	/**
 	 * получение пути
 	 * @return string
 	 */
 	public function pwd() {
 		return $this->path;
+	}
+
+
+	/**
+	 * удаляем правый слэш
+	 * @param string $path путь
+	 * @return string
+	 */
+	private function repair_path($path = null) {
+		if (empty($path)) $path = $this->path;
+
+		return rtrim($path, "/\\");
 	}
 
 }

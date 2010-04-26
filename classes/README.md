@@ -89,3 +89,23 @@ folder.class.php - folder manipulation
 
 file.class.php - file manipulation
 ==================================
+
+
+
+cache.class.php - simple caching system for all
+===============================================
+
+	cache::$dir = '/tmp/site_cache'; // set writable dir for cache
+
+	$query = cache::get("cache_key", 60); // get cache every 60 minutes
+
+	if ($query === false) {
+		$query = db::query("
+			SELECT *
+			FROM `t1`
+			LEFT JOIN (`t2`) USING (`id`)
+			ORDER by `name`
+		");
+
+		cache::set("statistics", $query); // set cache
+	}

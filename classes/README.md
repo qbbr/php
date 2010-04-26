@@ -5,11 +5,11 @@ db.class.php - php class for MySQL DB with debug
 
 	db::setConfig(
 		array(
-			'db_host' => "localhost",
-			'db_post' => 3306,
-			'db_name' => "test_base",
-			'db_user' => "user_name",
-			'db_psswd' => "password123"
+			"db_host" => "localhost",
+			"db_post" => 3306,
+			"db_name" => "test_base",
+			"db_user" => "user_name",
+			"db_psswd" => "password123"
 		)
 	);
 
@@ -85,17 +85,40 @@ mail.class.php - send mail
 folder.class.php - folder manipulation
 ======================================
 
+	require "folder.class.php";
+
+	$folder = new folder("/home/qbbr/folder");
+	$folder->create();
+	echo $folder->pwd();
+	$folder->delete();
+
 
 
 file.class.php - file manipulation
 ==================================
+
+	require "folder.class.php"; // depends: folder.class.php
+	require "file.class.php";
+
+	$file = new file("/var/www/dir/file", true);
+	$file->write("xDD");
+
+	var_dump($file->read());
+
+	var_dump($file->info());
+	var_dump($file->last_access());
+	var_dump($file->last_change());
+	var_dump($file->perms());
+	var_dump($file->size());
+
+	$file->delete();
 
 
 
 cache.class.php - simple caching system for all
 ===============================================
 
-	cache::$dir = '/tmp/site_cache'; // set writable dir for cache
+	cache::$dir = "/tmp/site_cache"; // set writable dir for cache
 
 	$query = cache::get("cache_key", 60); // get cache every 60 minutes
 

@@ -25,6 +25,12 @@ class mail {
 	private $headers = array();
 
 	/**
+	 * кому
+	 * @var string
+	 */
+	private $to = "";
+
+	/**
 	 * тема письма
 	 * @var string
 	 */
@@ -81,7 +87,8 @@ class mail {
 	 * @return bool
 	 */
 	public function to($mail) {
-		return $this->set_header("To", $this->parse_mail($mail));
+		$this->to = $this->parse_mail($mail);
+		return true;
 	}
 
 
@@ -150,7 +157,7 @@ class mail {
 
 		$headers = $this->build_headers();
 
-		return @mail($this->headers["To"], $this->subject, $this->message, $headers);
+		return @mail($this->to, $this->subject, $this->message, $headers);
 	}
 
 
@@ -180,7 +187,7 @@ class mail {
 		}
 
 		$this->set_header("Mime-Version", "1.0");
-		$this->set_header("X-Mailer", "PHP " + phpversion());
+		$this->set_header("X-Mailer", "PHP ".phpversion());
 
 		$headers = "";
 		foreach ($this->headers as $key => $value) {

@@ -24,6 +24,10 @@ class template {
 	 */
 	private $tmpl_file = '';
 
+	/**
+	 * переменные используемые в шаблоне
+	 * @var array
+	 */
 	private $variables = array();
 
 

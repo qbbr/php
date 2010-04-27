@@ -6,7 +6,17 @@
 
 class db {
 
+	/**
+	 * MySQL обьект
+	 * @var resource
+	 */
 	static private $obj = null;
+
+	/**
+	 * массив с настройками подключения
+	 * @see setConfig
+	 * @var array
+	 */
 	static private $config = array();
 
 	/**

@@ -45,9 +45,9 @@ class mail {
 	 */
 	private function set_header($key, $value) {
 		if (empty($key) || empty($value)) return false;
-		
+
 		$this->headers[$key] = $value;
-		
+
 		return true;
 	}
 
@@ -94,7 +94,7 @@ class mail {
 		return $this->set_header("Cc", $this->parse_mail($mail));
 	}
 
-	
+
 	/**
 	 * скрытая копия
 	 * @param string $mail почта
@@ -112,7 +112,7 @@ class mail {
 	 */
 	public function subject($subject) {
 		$this->subject = $subject;
-		
+
 		return true;
 	}
 
@@ -126,6 +126,18 @@ class mail {
 		$this->message = $msg;
 
 		return true;
+	}
+
+
+	/**
+	 * назначить приоритет важности письма
+	 * @param int $priority приоритет от 1 (самый высокий) до 5 (самый низкий)
+	 * @return bool
+	 */
+	public function priority($priority) {
+		if (!is_numeric($priority)) return false;
+
+		return $this->set_header("X-Priority", $priority);
 	}
 
 
@@ -149,7 +161,7 @@ class mail {
 	 */
 	private function parse_mail($mail) {
 		if (empty($mail)) return false;
-		
+
 		$mails = explode(",", $mail);
 		for ($i = 0; $i < count($mails); $i++) {
 			$mails[$i] = trim($mails[$i]);
@@ -168,7 +180,8 @@ class mail {
 		}
 
 		$this->set_header("Mime-Version", "1.0");
-		
+		$this->set_header("X-Mailer", "PHP " + phpversion());
+
 		$headers = "";
 		foreach ($this->headers as $key => $value) {
 			$value = trim($value);
@@ -176,7 +189,7 @@ class mail {
 		}
 		$headers .= "Content-Type: text/plain; charset=".$this->charset."\n";
 		$headers .= "Content-Transfer-Encoding: ".$this->encoding;
-		
+
 		return $headers;
 	}
 

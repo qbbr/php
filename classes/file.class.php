@@ -1,8 +1,10 @@
 <?php
 /**
  * работа с файлом
+ *
  * @depends folder.class.php
- * @author Sokolov Innokenty (c) 2010
+ * @author Sokolov Innokenty, <qbbr@qbbr.ru>
+ * @copyright Copyright (c) 2010, qbbr
  */
 
 class file {

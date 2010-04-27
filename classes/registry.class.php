@@ -1,14 +1,16 @@
 <?php
 /**
  * регистр для хранения временных данных
- * @author Sokolov Innokenty (c) 2010
+ * 
+ * @author Sokolov Innokenty, <qbbr@qbbr.ru>
+ * @copyright Copyright (c) 2010, qbbr
  */
 
 class registry {
 
 	/**
 	 * регистр
-	 * @var array
+	 * @staticvar array
 	 */
 	static private $registry = array();
 

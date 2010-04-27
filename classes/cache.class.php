@@ -1,14 +1,16 @@
 <?php
 /**
  * кэширование
- * @author Sokolov Innokenty (c) 2010
+ *
+ * @author Sokolov Innokenty, <qbbr@qbbr.ru>
+ * @copyright Copyright (c) 2010, qbbr
  */
 
 class cache {
 
 	/**
 	 * директория для хранения кэша
-	 * @var string
+	 * @staticvar string
 	 */
 	static public $dir = '';
 

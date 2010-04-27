@@ -1,39 +1,41 @@
 <?php
 /**
  * работа с базой данных MySQL
- * @author Sokolov Innokenty (c) 2010
+ *
+ * @author Sokolov Innokenty, <qbbr@qbbr.ru>
+ * @copyright Copyright (c) 2010, qbbr
  */
 
 class db {
 
 	/**
 	 * MySQL обьект
-	 * @var resource
+	 * @staticvar resource
 	 */
 	static private $obj = null;
 
 	/**
 	 * массив с настройками подключения
 	 * @see setConfig
-	 * @var array
+	 * @staticvar array
 	 */
 	static private $config = array();
 
 	/**
 	 * debug
-	 * @var bool
+	 * @staticvar bool
 	 */
 	static public $debug = false;
 
 	/**
 	 * лог debug`a
-	 * @var array
+	 * @staticvar array
 	 */
 	static public $query_log = array();
 
 	/**
 	 * суммарное время выполнение всех запроса
-	 * @var float
+	 * @staticvar float
 	 */
 	static public $all_query_time = 0;
 

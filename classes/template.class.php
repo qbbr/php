@@ -1,7 +1,9 @@
 <?php
 /**
  * шаблонизатор
- * @author Sokolov Innokenty (c) 2010
+ * 
+ * @author Sokolov Innokenty, <qbbr@qbbr.ru>
+ * @copyright Copyright (c) 2010, qbbr
  */
 
 class template {
@@ -16,7 +18,7 @@ class template {
 	 * директория с шаблонами
 	 * @var string
 	 */
-	private $tmpl_dir = '/var/www/pub.tema.local.q/__app__/__modules__/role/views/';
+	private $tmpl_dir = '/var/www/site/template/';
 
 	/**
 	 * шаблон (полный путь)

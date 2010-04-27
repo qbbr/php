@@ -13,10 +13,16 @@ class mail {
 	public $charset = "utf8";
 
 	/**
-	 * кодирование контента письма
+	 * кодирование контента
 	 * @var string
 	 */
 	private $encoding = "8bit";
+
+	/**
+	 * формат контента
+	 * @var string
+	 */
+	private $content_type = "text/plain";
 
 	/**
 	 * заголовки
@@ -41,6 +47,23 @@ class mail {
 	 * @var string
 	 */
 	private $message = "";
+
+	/**
+	 * прикреплённые файлы
+	 * @var array
+	 */
+	private $attach = array();
+
+	/**
+	 * граница для прикреплённых файлов
+	 * @var string
+	 */
+	private $boundary = "";
+
+
+	public function __construct() {
+		$this->boundary = "--".md5(uniqid("boundary"));
+	}
 
 
 	/**
@@ -93,7 +116,7 @@ class mail {
 
 
 	/**
-	 * копия
+	 * открытая копия
 	 * @param string $mail почта
 	 * @return bool
 	 */
@@ -127,9 +150,12 @@ class mail {
 	/**
 	 * текст сообщения
 	 * @param string $msg сообщение
+	 * @param bool $content_type_is_html[optional] сообщение в формате html?
 	 * @return bool
 	 */
-	public function message($msg) {
+	public function message($msg, $content_type_is_html = false) {
+		if ($content_type_is_html) $this->content_type = "text/html";
+
 		$this->message = $msg;
 
 		return true;
@@ -149,6 +175,26 @@ class mail {
 
 
 	/**
+	 * прикрепить файл
+	 * @param string $file путь до файла
+	 * @param string $file_name[optional] название файла
+	 * @param string $file_type[optional] тип файла
+	 * @param string $disposition[optional]
+	 * @return bool
+	 */
+	public function attach($file, $file_name = null, $file_type = null, $disposition = "attachment") {
+		if (!is_file($file)) return false;
+
+		if (empty($file_type)) $file_type = mime_content_type($file); // "application/x-unknown-content-type"
+		if (empty($file_name)) $file_name = basename($file);
+
+		$this->attach[] = array($file, $file_name, $file_type, $disposition);
+
+		return true;
+	}
+
+
+	/**
 	 * отправка
 	 * @return bool
 	 */
@@ -157,9 +203,68 @@ class mail {
 
 		$headers = $this->build_headers();
 
-		return @mail($this->to, $this->subject, $this->message, $headers);
+		$body = empty($this->attach) ? $this->message : $this->build_attach();
+
+		return @mail($this->to, $this->subject, $body, $headers);
 	}
 
+
+	/**
+	 * собираем прикреплённые файла
+	 * @return string
+	 */
+	private function build_attach() {
+		$body = "This is a multi-part message in MIME format.\n--$this->boundary\n";
+		$body .= "Content-Type: ".$this->content_type."; charset=$this->charset\n";
+		$body .= "Content-Transfer-Encoding: $this->encoding\n\n";
+		$body .= $this->message;
+		$body .= "\n";
+
+		$attachz = array();
+
+		foreach ($this->attach as $value) {
+			$file = $value[0];
+			$basename = $value[1];
+			$file_type = $value[2];
+			$disposition = $value[3];
+
+			$attachz[] = "--$this->boundary\nContent-type: $file_type;\n name=\"$basename\"\nContent-Transfer-Encoding: base64\nContent-Disposition: $disposition;\n filename=\"$basename\"\n";
+			$attachz[] = chunk_split(base64_encode(file_get_contents($file)));
+		}
+
+		$body .= implode(chr(13).chr(10), $attachz);
+
+		return $body;
+	}
+
+
+	/**
+	 * собираем заголовки
+	 * @return string
+	 */
+	private function build_headers() {
+		if (empty($this->headers["Reply-To"])) {
+			$this->reply_to($this->headers["From"]);
+		}
+
+		if (empty($this->attach)) {
+			$this->set_header("Content-Type", "$this->content_type; charset=".$this->charset);
+		} else {
+			$this->set_header("Content-Type", "multipart/mixed;\n boundary=\"$this->boundary\"");
+		}
+
+		$this->set_header("Mime-Version", "1.0");
+		$this->set_header("X-Mailer", "PHP ".phpversion());
+		$this->set_header("Content-Transfer-Encoding", $this->encoding);
+
+		$headers = "";
+		foreach ($this->headers as $key => $value) {
+			$value = trim($value);
+			$headers .= "$key: $value\n";
+		}
+
+		return $headers;
+	}
 
 	/**
 	 * правим почту (запятую), если их несколько
@@ -174,30 +279,6 @@ class mail {
 			$mails[$i] = trim($mails[$i]);
 		}
 		return implode(", ", $mails);
-	}
-
-
-	/**
-	 * собираем заголовки
-	 * @return string
-	 */
-	private function build_headers() {
-		if (empty($this->headers["Reply-To"])) {
-			$this->reply_to($this->headers["From"]);
-		}
-
-		$this->set_header("Mime-Version", "1.0");
-		$this->set_header("X-Mailer", "PHP ".phpversion());
-
-		$headers = "";
-		foreach ($this->headers as $key => $value) {
-			$value = trim($value);
-			$headers .= "$key: $value\n";
-		}
-		$headers .= "Content-Type: text/plain; charset=".$this->charset."\n";
-		$headers .= "Content-Transfer-Encoding: ".$this->encoding;
-
-		return $headers;
 	}
 
 }

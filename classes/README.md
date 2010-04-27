@@ -78,6 +78,7 @@ mail.class.php - send mail
 	$mail->bcc("mail@mail.ru");
 	$mail->subject("тема");
 	$mail->message("текст");
+	$mail->attach("/var/www/etc/file.txt");
 	$mail->send();
 
 

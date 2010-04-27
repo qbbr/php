@@ -136,6 +136,33 @@ class db {
 
 
 	/**
+	 * начать транзакцию
+	 * @return bool
+	 */
+	static public function transaction_begin() {
+		return self::query(" START TRANSACTION ");
+	}
+
+
+	/**
+	 * зафиксировать
+	 * @return bool
+	 */
+	static public function transaction_commit() {
+		return self::query(" COMMIT ");
+	}
+
+
+	/**
+	 * откат
+	 * @return bool
+	 */
+	static public function transaction_rollback() {
+		return self::query(" ROLLBACK ");
+	}
+
+
+	/**
 	 * получение auto_increment id из последнего запроса
 	 * @static
 	 * @return int

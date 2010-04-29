@@ -73,8 +73,8 @@ class template {
 
 	/**
 	 * назначение переменной
-	 * @param <type> $name название переменной
-	 * @param <type> $value значение
+	 * @param string $name название переменной
+	 * @param mix $value значение
 	 */
 	public function __set($name, $value) {
 		$this->variables[$name] = $value;

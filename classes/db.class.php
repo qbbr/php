@@ -106,15 +106,7 @@ class db {
 		$result = mysql_query($query, self::getObj());
 
 		// debug
-		if (self::$debug) {
-			$query_time = self::get_microtime() - $start_time;
-			self::$all_query_time += $query_time;
-			array_push(self::$query_log, array(
-				'query' => $query,
-				'result' => $result,
-				'timestamp' => $query_time
-			));
-		}
+		self::logs($query, $result, $start_time);
 
 		if ($result === true) {
 			return true;
@@ -144,6 +136,23 @@ class db {
 					return $r;
 			}
 		}
+	}
+
+
+	/**
+	 * кол-во строк
+	 * @param str $query SQL запрос
+	 * @return int
+	 */
+	static public function num_rows($query) {
+		if (self::$debug) $start_time = self::get_microtime(); // debug
+
+		$result = mysql_query($query, self::getObj());
+
+		// debug
+		self::logs($query, $result, $start_time);
+
+		return @mysql_num_rows($result);
 	}
 
 
@@ -192,6 +201,28 @@ class db {
 	static private function get_microtime() {
 		$time = explode(" ", microtime());
 		return ((float)$time[0] + (float)$time[1]);
+	}
+
+
+	/**
+	 * логирование запросов
+	 * @param str $query SQL запрос
+	 * @param resource $result результат
+	 * @param float $start_time время старта
+	 * @return bool
+	 */
+	static private function logs($query, $result, $start_time) {
+		if (!self::$debug) return false;
+
+		$query_time = self::get_microtime() - $start_time;
+		self::$all_query_time += $query_time;
+		array_push(self::$query_log, array(
+			'query' => $query,
+			'result' => $result,
+			'timestamp' => $query_time
+		));
+
+		return true;
 	}
 
 }

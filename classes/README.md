@@ -6,7 +6,7 @@ db.class.php - php class for MySQL DB with debug
 	db::setConfig(
 		array(
 			"db_host" => "localhost",
-			"db_post" => 3306,
+			"db_port" => 3306,
 			"db_name" => "test_base",
 			"db_user" => "user_name",
 			"db_psswd" => "password123"

@@ -22,6 +22,12 @@ class db {
 	static private $config = array();
 
 	/**
+	 * порт по-умолчанию
+	 * @staticvar int
+	 */
+	static private $db_port = 3306;
+
+	/**
 	 * debug
 	 * @staticvar bool
 	 */
@@ -46,9 +52,10 @@ class db {
 	 * @return obj
 	 */
 	static private function getObj() {
-		if (empty(self::$obj)) {
+		if (!self::$obj) {
 			self::$obj = self::connect();
 		}
+
 		return self::$obj;
 	}
 
@@ -59,12 +66,21 @@ class db {
 	 * @return obj
 	 */
 	static private function connect() {
-		if (empty(self::$config)) trigger_error("db config not found!", E_USER_WARNING);
+		if (empty(self::$config)) {
+			throw new Exception("Database config not found!");
+		}
 
-		$obj = @mysql_connect(self::$config['db_host'].':'.self::$config['db_post'], self::$config['db_user'], self::$config['db_psswd']);
-		if (!$obj) trigger_error('could not connect to server `'.self::$config['db_host'].'`', E_USER_WARNING);
+		$db_port = isset(self::$config["db_port"]) ? self::$config["db_port"] : self::$db_port;
 
-		if (!@mysql_select_db(self::$config['db_name'], $obj)) trigger_error('could not set db `'.self::$config['db_name'].'`', E_USER_WARNING);
+		$obj = @mysql_connect(self::$config["db_host"] . ":" . $db_port, self::$config["db_user"], self::$config["db_psswd"]);
+
+		if (!$obj) {
+			throw new Exception("Could not connect to server!");
+		}
+
+		if (!@mysql_select_db(self::$config["db_name"], $obj)) {
+			throw new Exception("Could not select database!");
+		}
 
 		mysql_query(" SET NAMES UTF8 ");
 
@@ -90,6 +106,7 @@ class db {
 			self::$config = $config;
 			return true;
 		}
+
 		return false;
 	}
 
@@ -106,7 +123,7 @@ class db {
 		$result = mysql_query($query, self::getObj());
 
 		// debug
-		self::logs($query, $result, $start_time);
+		if (self::$debug) self::logs($query, $result, $start_time);
 
 		if ($result === true) {
 			return true;
@@ -150,7 +167,7 @@ class db {
 		$result = mysql_query($query, self::getObj());
 
 		// debug
-		self::logs($query, $result, $start_time);
+		if (self::$debug) self::logs($query, $result, $start_time);
 
 		return @mysql_num_rows($result);
 	}
@@ -212,14 +229,12 @@ class db {
 	 * @return bool
 	 */
 	static private function logs($query, $result, $start_time) {
-		if (!self::$debug) return false;
-
 		$query_time = self::get_microtime() - $start_time;
 		self::$all_query_time += $query_time;
 		array_push(self::$query_log, array(
-			'query' => $query,
-			'result' => $result,
-			'timestamp' => $query_time
+			"query" => $query,
+			"result" => $result,
+			"timestamp" => $query_time
 		));
 
 		return true;

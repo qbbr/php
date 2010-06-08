@@ -78,7 +78,7 @@ class folder {
 		$path = $this->repair_path($path);
 
 		foreach (scandir($path) as $item) {
-			if ($item == '.' || $item == '..') continue;
+			if ($item == "." || $item == "..") continue;
 
 			$item = $path.DIRECTORY_SEPARATOR.$item;
 

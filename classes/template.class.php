@@ -18,13 +18,13 @@ class template {
 	 * директория с шаблонами
 	 * @var string
 	 */
-	private $tmpl_dir = '/var/www/site/template/';
+	private $tmpl_dir = "/var/www/site/template/";
 
 	/**
 	 * шаблон (полный путь)
 	 * @var string
 	 */
-	private $tmpl_file = '';
+	private $tmpl_file = "";
 
 	/**
 	 * переменные используемые в шаблоне
@@ -42,10 +42,10 @@ class template {
 		if (isset($tmpl_dir)) $this->tmpl_dir = $tmpl_dir;
 		$this->tmpl_dir = rtrim($this->tmpl_dir, "/\\");
 
-		$tmpl_file = $this->tmpl_dir.DIRECTORY_SEPARATOR.$tmpl_name.'.tmpl.php';
+		$tmpl_file = $this->tmpl_dir.DIRECTORY_SEPARATOR.$tmpl_name.".tmpl.php";
 
 		if (!is_file($tmpl_file)) {
-			trigger_error("template module say `$tmpl_file` not found!", E_USER_ERROR);
+			throw new Exception("Template file `$tmpl_file` not found!");
 		}
 
 		$this->tmpl_file = $tmpl_file;

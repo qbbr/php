@@ -12,7 +12,7 @@ class cache {
 	 * директория для хранения кэша
 	 * @staticvar string
 	 */
-	static public $dir = '';
+	static public $dir = "";
 
 
 	/**
@@ -58,7 +58,7 @@ class cache {
 	 * @return string
 	 */
 	static private function get_path($key) {
-		return rtrim(self::$dir, "/\\").DIRECTORY_SEPARATOR.md5($key).'.tmp';
+		return rtrim(self::$dir, "/\\").DIRECTORY_SEPARATOR.md5($key).".tmp";
 	}
 
 }

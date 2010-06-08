@@ -95,7 +95,7 @@ class file {
 	 * @param string $mode тип доступа к файлу
 	 * @return bool
 	 */
-	public function read($mode = 'rb') {
+	public function read($mode = "rb") {
 		if (!$this->open($mode)) {
 			return false;
 		}
@@ -110,7 +110,7 @@ class file {
 	 * @param string $mode тип доступа к файлу
 	 * @return bool
 	 */
-	public function write($data, $mode = 'w') {
+	public function write($data, $mode = "w") {
 		if (!$this->open($mode)) {
 			return false;
 		}
@@ -158,7 +158,7 @@ class file {
 	 * @return int
 	 */
 	public function perms() {
-		return substr(sprintf('%o', fileperms($this->path)), -4);
+		return substr(sprintf("%o", fileperms($this->path)), -4);
 	}
 
 

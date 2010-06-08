@@ -23,10 +23,11 @@ class registry {
 	 * @return bool
 	 */
 	static public function set($key, $value) {
-		if ($key && !isset(self::$registry[$key])) {
+		if (!isset(self::$registry[$key])) {
 			self::$registry[$key] = $value;
 			return true;
 		}
+
 		return false;
 	}
 
@@ -50,6 +51,7 @@ class registry {
 				return false;
 			}
 		}
+
 		return $r;
 	}
 

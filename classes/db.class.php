@@ -211,6 +211,16 @@ class db {
 
 
 	/**
+	 * экранирование (mysql_real_escape_string)
+	 * @param str $str строка, которая должна быть экранирована
+	 * @return str
+	 */
+	static public function escape($str) {
+		return mysql_real_escape_string($str, self::getObj());
+	}
+
+
+	/**
 	 * получение времени с микросекундами для debug`а
 	 * @static
 	 * @return float

@@ -47,7 +47,7 @@ class file {
 	 */
 	public function __construct($path, $create = false) {
 		if ($create === false && !is_file($path)) {
-			trigger_error("file.class.php - path to file is wrong", E_USER_ERROR);
+			throw new Exception("Path to file is wrong");
 		}
 		
 		$this->path = $path;

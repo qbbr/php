@@ -205,7 +205,7 @@ class db {
 	 * @static
 	 * @return int
 	 */
-	static public function lastInsertId() {
+	static public function last_insert_id() {
 		return mysql_insert_id(self::getObj());
 	}
 

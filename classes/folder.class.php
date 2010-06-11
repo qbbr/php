@@ -29,7 +29,7 @@ class folder {
 	 */
 	public function __construct($path = false, $create = false, $mod = false) {
 		if ($path !== false && empty($path)) {
-			trigger_error("folder.class.php - path to dir is empty", E_USER_ERROR);
+			throw new Exception("Path to dir is empty");
 		}
 
 		$this->path = $path;

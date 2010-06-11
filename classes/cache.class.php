@@ -17,6 +17,7 @@ class cache {
 
 	/**
 	 * записать в кэш
+	 * @static
 	 * @param string $key ключ кэша
 	 * @param mix $value значение
 	 * @return bool
@@ -34,6 +35,7 @@ class cache {
 
 	/**
 	 * прочитать кэш
+	 * @static
 	 * @param string $key ключ кэша
 	 * @param int $expire_in_minuts время жизни кэша в минутах
 	 * @return bool
@@ -54,6 +56,7 @@ class cache {
 	
 	/**
 	 * получение пути до кэша
+	 * @static
 	 * @param string $key ключ кэша
 	 * @return string
 	 */
